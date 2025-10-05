@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 interface LoginRequest {
   username: string;
@@ -29,7 +30,7 @@ export class LoginComponent {
   errorMessage = '';
   isLoading = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   onLogin() {
     if (!this.loginRequest.username || !this.loginRequest.password) {
@@ -43,7 +44,7 @@ export class LoginComponent {
     this.http.post<LoginResponse>('/auth/login', this.loginRequest)
       .subscribe({
         next: (response) => {
-          localStorage.setItem('authToken', response.token);
+          this.authService.setToken(response.token);
           this.isLoading = false;
           // Redirect to dashboard or main page after successful login
           this.router.navigate(['/dashboard']);

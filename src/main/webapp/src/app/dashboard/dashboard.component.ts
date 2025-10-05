@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,28 +14,23 @@ export class DashboardComponent implements OnInit {
   username: string = '';
   token: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    this.token = localStorage.getItem('authToken') || '';
+    this.token = this.authService.getToken() || '';
 
     // If no token, redirect to login
-    if (!this.token) {
+    if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
 
-    // Decode username from token (simple implementation for demo)
-    try {
-      const payload = JSON.parse(atob(this.token.split('.')[1]));
-      this.username = payload.sub || 'User';
-    } catch (error) {
-      this.username = 'User';
-    }
+    // Get username from AuthService
+    this.username = this.authService.getUsername();
   }
 
   logout() {
-    localStorage.removeItem('authToken');
+    this.authService.removeToken();
     this.router.navigate(['/login']);
   }
 }
