@@ -14,8 +14,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                // Allow public access to authentication endpoints and static resources
-                .requestMatchers("/auth/**", "/static/**").permitAll()
+                // Allow public access to authentication endpoints, static resources, and Swagger UI
+                .requestMatchers("/auth/**", "/static/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 // Require authentication for all other requests
                 .anyRequest().authenticated()
                 .and()
