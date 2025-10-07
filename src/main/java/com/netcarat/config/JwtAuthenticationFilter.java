@@ -1,4 +1,4 @@
-package com.demo.demo.config;
+package com.netcarat.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

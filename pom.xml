@@ -11,9 +11,9 @@
 	</parent>
 
 	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>netcarat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Kpi Demo</name>
+	<name>Netcarat</name>
 
 	<properties>
 		<java.version>17</java.version>
@@ -134,7 +134,7 @@
 							<outputDirectory>${project.build.directory}/classes/static</outputDirectory>
 							<resources>
 								<resource>
-									<directory>src/main/webapp/dist/demo/browser</directory>
+									<directory>src/main/webapp/dist/netcarat/browser</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>

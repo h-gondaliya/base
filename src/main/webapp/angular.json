@@ -20,7 +20,7 @@
             "browser": "src/main.ts",
             "index": "src/index.html",
             "baseHref": "/static/",
-            "outputPath": "dist/demo",
+            "outputPath": "dist/netcarat",
             "polyfills": [
               "zone.js"
             ],

@@ -1,4 +1,4 @@
-package com.demo.demo.modal;
+package com.netcarat.modal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

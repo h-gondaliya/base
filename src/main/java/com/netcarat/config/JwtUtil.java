@@ -1,4 +1,4 @@
-package com.demo.demo.config;
+package com.netcarat.config;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

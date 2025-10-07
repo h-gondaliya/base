@@ -1,7 +1,7 @@
-package com.demo.demo.controller;
+package com.netcarat.controller;
 
-import com.demo.demo.dto.KPIDTO;
-import com.demo.demo.service.KPIService;
+import com.netcarat.dto.KPIDTO;
+import com.netcarat.service.KPIService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

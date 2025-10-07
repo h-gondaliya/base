@@ -1,7 +1,7 @@
-package com.demo.demo.repository;
+package com.netcarat.repository;
 
 
-import com.demo.demo.modal.KPI;
+import com.netcarat.modal.KPI;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

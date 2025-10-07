@@ -1,48 +1,33 @@
-package com.demo.demo.modal;
+package com.netcarat.dto;
 
-
-import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "kpis")
-public class KPI {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+public class KPIDTO {
     private UUID id;
 
-    @Column(nullable = false)
     private String createdUserId;
 
-    @Column(nullable = false)
     private String kpiDomain;
 
-    @Column(nullable = false)
     private String kpiOwnerId;
 
-    @Column(nullable = false, length = 1000)
     private String kpiDescription;
 
-    @Column(nullable = false)
     private String outcomeType;
 
-    @Column(nullable = false)
     private String refreshFrequency;
 
-    @ElementCollection
-    @CollectionTable(name = "kpi_source_systems", joinColumns = @JoinColumn(name = "kpi_id"))
-    @Column(name = "source_system")
     private List<String> sourceSystem;
 
     // Default constructor
-    public KPI() {}
+    public KPIDTO() {}
 
     // Constructor with fields
-    public KPI(String createdUserId, String kpiDomain, String kpiOwnerId,
-               String kpiDescription, String outcomeType, String refreshFrequency,
-               List<String> sourceSystem) {
+    public KPIDTO(UUID id, String createdUserId, String kpiDomain, String kpiOwnerId,
+                  String kpiDescription, String outcomeType, String refreshFrequency,
+                  List<String> sourceSystem) {
+        this.id = id;
         this.createdUserId = createdUserId;
         this.kpiDomain = kpiDomain;
         this.kpiOwnerId = kpiOwnerId;

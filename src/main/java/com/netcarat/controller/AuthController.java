@@ -1,8 +1,8 @@
-package com.demo.demo.controller;
+package com.netcarat.controller;
 
-import com.demo.demo.config.JwtUtil;
-import com.demo.demo.modal.LoginRequest;
-import com.demo.demo.modal.LoginResponse;
+import com.netcarat.config.JwtUtil;
+import com.netcarat.modal.LoginRequest;
+import com.netcarat.modal.LoginResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

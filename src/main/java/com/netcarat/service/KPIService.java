@@ -1,8 +1,8 @@
-package com.demo.demo.service;
+package com.netcarat.service;
 
-import com.demo.demo.dto.KPIDTO;
-import com.demo.demo.modal.KPI;
-import com.demo.demo.repository.KPIRepository;
+import com.netcarat.dto.KPIDTO;
+import com.netcarat.modal.KPI;
+import com.netcarat.repository.KPIRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
