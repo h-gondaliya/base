@@ -44,11 +44,8 @@ public class NetcaratStock {
     @Column(name = "payment_type", length = 20)
     private String paymentType;
 
-    @Column(name = "client_id")
-    private Integer clientId;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", insertable = false, updatable = false)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @Column(name = "sell_date")
@@ -65,7 +62,7 @@ public class NetcaratStock {
                         BigDecimal diamondWeight, String goldKt, BigDecimal colourStoneWeight,
                         String colourStoneType, String productCatagory, String designNumber,
                         BigDecimal price, BigDecimal soldPrice, String paymentType,
-                        Integer clientId, LocalDate sellDate, String description) {
+                        Client client, LocalDate sellDate, String description) {
         this.id = id;
         this.grossWeight = grossWeight;
         this.diamondPieces = diamondPieces;
@@ -78,7 +75,7 @@ public class NetcaratStock {
         this.price = price;
         this.soldPrice = soldPrice;
         this.paymentType = paymentType;
-        this.clientId = clientId;
+        this.client = client;
         this.sellDate = sellDate;
         this.description = description;
     }
@@ -180,13 +177,6 @@ public class NetcaratStock {
         this.paymentType = paymentType;
     }
 
-    public Integer getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Integer clientId) {
-        this.clientId = clientId;
-    }
 
     public LocalDate getSellDate() {
         return sellDate;
