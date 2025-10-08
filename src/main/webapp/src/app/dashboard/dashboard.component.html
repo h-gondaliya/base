@@ -60,7 +60,12 @@
               <tr *ngFor="let stat of approvalStatsByClient">
                 <td>{{ stat.clientName }}</td>
                 <td>{{ stat.itemCount }}</td>
-                <td>{{ stat.totalPrice | currency:'USD':'symbol':'1.2-2' }}</td>
+                <td>{{ stat.totalPrice | currency:'EUR':'symbol':'1.2-2' }}</td>
+              </tr>
+              <tr class="totals-row">
+                <td><strong>Total</strong></td>
+                <td><strong>{{ totalItemCount }}</strong></td>
+                <td><strong>{{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</strong></td>
               </tr>
             </tbody>
           </table>

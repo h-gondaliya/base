@@ -72,4 +72,14 @@ export class DashboardComponent implements OnInit {
     this.authService.removeToken();
     this.router.navigate(['/login']);
   }
+
+  // Calculate total item count across all clients
+  get totalItemCount(): number {
+    return this.approvalStatsByClient.reduce((total, stat) => total + stat.itemCount, 0);
+  }
+
+  // Calculate total price across all clients
+  get totalPrice(): number {
+    return this.approvalStatsByClient.reduce((total, stat) => total + stat.totalPrice, 0);
+  }
 }
