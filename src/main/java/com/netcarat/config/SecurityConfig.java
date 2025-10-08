@@ -15,7 +15,8 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests()
                 // Allow public access to authentication endpoints, static resources, and Swagger UI
-                .requestMatchers("/auth/**", "/static/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+//                .requestMatchers("/auth/**", "/static/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                .requestMatchers("/**").permitAll()
                 // Require authentication for all other requests
                 .anyRequest().authenticated()
                 .and()
