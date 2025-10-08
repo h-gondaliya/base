@@ -1,5 +1,6 @@
 package com.netcarat.controller;
 
+import com.netcarat.dto.ClientApprovalStatsDto;
 import com.netcarat.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -30,6 +32,22 @@ public class ProductController {
         try {
             long availableCount = productService.getAvailableProductsCount();
             return ResponseEntity.ok(availableCount);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/approval-stats-by-client")
+    @Operation(summary = "Get approval statistics by client", 
+               description = "Returns approval statistics grouped by client including client name, item count, and total price")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved approval statistics by client"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<ClientApprovalStatsDto>> getApprovalStatsByClient() {
+        try {
+            List<ClientApprovalStatsDto> stats = productService.getApprovalStatsByClient();
+            return ResponseEntity.ok(stats);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

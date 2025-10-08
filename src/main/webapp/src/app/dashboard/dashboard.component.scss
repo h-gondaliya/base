@@ -145,6 +145,117 @@
     font-size: 12px;
     font-style: italic;
   }
+
+  .stock-count {
+    color: #667eea !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    text-align: center;
+    margin: 10px 0 !important;
+  }
+}
+
+.approval-stats-section {
+  margin-top: 40px;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 1s ease-out;
+
+  h3 {
+    color: #333;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 25px 0;
+    text-align: center;
+  }
+
+  .loading-indicator {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+  }
+
+  .no-data {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+    font-style: italic;
+  }
+}
+
+.approval-table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.approval-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  font-size: 14px;
+
+  thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+
+    th {
+      padding: 15px 20px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 16px;
+      border: none;
+
+      &:first-child {
+        border-top-left-radius: 8px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 8px;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #e9ecef;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f8f9fa;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: 15px 20px;
+        color: #555;
+        border: none;
+
+        &:first-child {
+          font-weight: 500;
+          color: #333;
+        }
+
+        &:nth-child(2) {
+          text-align: center;
+          font-weight: 600;
+          color: #667eea;
+        }
+
+        &:last-child {
+          text-align: right;
+          font-weight: 600;
+          color: #28a745;
+        }
+      }
+    }
+  }
 }
 
 @keyframes fadeInUp {
@@ -194,6 +305,28 @@
 
   .info-card {
     padding: 20px;
+  }
+
+  .approval-stats-section {
+    margin-top: 30px;
+    padding: 20px;
+
+    h3 {
+      font-size: 20px;
+    }
+  }
+
+  .approval-table {
+    font-size: 13px;
+
+    thead th {
+      padding: 12px 15px;
+      font-size: 14px;
+    }
+
+    tbody td {
+      padding: 12px 15px;
+    }
   }
 }
 

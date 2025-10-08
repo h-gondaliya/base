@@ -20,19 +20,53 @@
         <div class="info-card">
           <h3>Authentication Status</h3>
           <p class="status-active">✓ Active</p>
-          <small>JWT Token is valid and stored</small>
+          <small>JWT token is valid and stored</small>
         </div>
 
         <div class="info-card">
           <h3>User Details</h3>
           <p><strong>Username:</strong> {{ username }}</p>
-          <small>Decoded from JWT token</small>
+          <small>JWT Token is valid and stored</small>
+        </div>
+
+        <div class="info-card">
+          <h3>Available Products</h3>
+          <p class="stock-count">{{ availableProductsCount }}</p>
+          <small>Total physical stock count</small>
         </div>
 
         <div class="info-card">
           <h3>Token Info</h3>
           <p class="token-preview">{{ token.substring(0, 50) }}...</p>
           <small>JWT token (truncated for display)</small>
+        </div>
+      </div>
+
+      <div class="approval-stats-section">
+        <h3>Approval Statistics by Client</h3>
+        <div class="loading-indicator" *ngIf="isLoadingStats">
+          <p>Loading approval statistics...</p>
+        </div>
+        <div class="approval-table-container" *ngIf="!isLoadingStats && approvalStatsByClient.length > 0">
+          <table class="approval-table">
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Item Count</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let stat of approvalStatsByClient">
+                <td>{{ stat.clientName }}</td>
+                <td>{{ stat.itemCount }}</td>
+                <td>{{ stat.totalPrice | currency:'USD':'symbol':'1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="no-data" *ngIf="!isLoadingStats && approvalStatsByClient.length === 0">
+          <p>No approval statistics available.</p>
         </div>
       </div>
     </div>

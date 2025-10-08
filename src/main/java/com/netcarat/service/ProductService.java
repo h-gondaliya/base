@@ -1,9 +1,13 @@
 package com.netcarat.service;
 
+import com.netcarat.dto.ClientApprovalStatsDto;
 import com.netcarat.repository.ApprovalRepository;
 import com.netcarat.repository.NetcaratStockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -34,5 +38,22 @@ public class ProductService {
      */
     public long getTotalUnsoldItemsCount() {
         return stockRepository.countUnsoldItems();
+    }
+
+    /**
+     * Get the total count of items in approval table per client and also total price
+     * 
+     * @return list of client approval statistics containing client info, item count, and total price
+     */
+    public List<ClientApprovalStatsDto> getApprovalStatsByClient() {
+        List<Object[]> results = approvalRepository.getApprovalStatsByClient();
+        
+        return results.stream()
+            .map(row -> new ClientApprovalStatsDto(
+                (String) row[0],         // client name
+                (Long) row[1],           // item count
+                (BigDecimal) row[2]      // total price
+            ))
+            .collect(Collectors.toList());
     }
 }
