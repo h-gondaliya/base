@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { ApiService, ClientApprovalStats } from '../services/api.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatTableModule, MatProgressSpinnerModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -17,6 +21,7 @@ export class DashboardComponent implements OnInit {
   availableProductsCount: number = 0;
   approvalStatsByClient: ClientApprovalStats[] = [];
   isLoadingStats: boolean = false;
+  displayedColumns: string[] = ['clientName', 'itemCount', 'totalPrice'];
 
   constructor(private router: Router, private authService: AuthService, private productApiService: ApiService) {}
 

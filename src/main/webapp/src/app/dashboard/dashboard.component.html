@@ -4,7 +4,7 @@
       <h1>Welcome to Dashboard</h1>
       <div class="user-info">
         <span>Hello, {{ username }}!</span>
-        <button class="logout-btn" (click)="logout()">Logout</button>
+        <button mat-raised-button color="warn" (click)="logout()">Logout</button>
       </div>
     </div>
   </header>
@@ -17,58 +17,77 @@
       </div>
 
       <div class="info-cards">
-        <div class="info-card">
-          <h3>Authentication Status</h3>
-          <p class="status-active">✓ Active</p>
-          <small>JWT token is valid and stored</small>
-        </div>
+        <mat-card class="info-card">
+          <mat-card-header>
+            <mat-card-title>Authentication Status</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="status-active">✓ Active</p>
+            <small>JWT token is valid and stored</small>
+          </mat-card-content>
+        </mat-card>
 
-        <div class="info-card">
-          <h3>User Details</h3>
-          <p><strong>Username:</strong> {{ username }}</p>
-          <small>JWT Token is valid and stored</small>
-        </div>
+        <mat-card class="info-card">
+          <mat-card-header>
+            <mat-card-title>User Details</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p><strong>Username:</strong> {{ username }}</p>
+            <small>JWT Token is valid and stored</small>
+          </mat-card-content>
+        </mat-card>
 
-        <div class="info-card">
-          <h3>Available Products</h3>
-          <p class="stock-count">{{ availableProductsCount }}</p>
-          <small>Total physical stock count</small>
-        </div>
+        <mat-card class="info-card">
+          <mat-card-header>
+            <mat-card-title>Available Products</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="stock-count">{{ availableProductsCount }}</p>
+            <small>Total physical stock count</small>
+          </mat-card-content>
+        </mat-card>
 
-        <div class="info-card">
-          <h3>Token Info</h3>
-          <p class="token-preview">{{ token.substring(0, 50) }}...</p>
-          <small>JWT token (truncated for display)</small>
-        </div>
+        <mat-card class="info-card">
+          <mat-card-header>
+            <mat-card-title>Token Info</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="token-preview">{{ token.substring(0, 50) }}...</p>
+            <small>JWT token (truncated for display)</small>
+          </mat-card-content>
+        </mat-card>
       </div>
 
       <div class="approval-stats-section">
         <h3>Approval Statistics by Client</h3>
         <div class="loading-indicator" *ngIf="isLoadingStats">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
           <p>Loading approval statistics...</p>
         </div>
         <div class="approval-table-container" *ngIf="!isLoadingStats && approvalStatsByClient.length > 0">
-          <table class="approval-table">
-            <thead>
-              <tr>
-                <th>Client Name</th>
-                <th>Item Count</th>
-                <th>Total Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let stat of approvalStatsByClient">
-                <td>{{ stat.clientName }}</td>
-                <td>{{ stat.itemCount }}</td>
-                <td>{{ stat.totalPrice | currency:'EUR':'symbol':'1.2-2' }}</td>
-              </tr>
-              <tr class="totals-row">
-                <td><strong>Total</strong></td>
-                <td><strong>{{ totalItemCount }}</strong></td>
-                <td><strong>{{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</strong></td>
-              </tr>
-            </tbody>
+          <table mat-table [dataSource]="approvalStatsByClient" class="mat-elevation-z8">
+            <ng-container matColumnDef="clientName">
+              <th mat-header-cell *matHeaderCellDef>Client Name</th>
+              <td mat-cell *matCellDef="let stat">{{ stat.clientName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="itemCount">
+              <th mat-header-cell *matHeaderCellDef>Item Count</th>
+              <td mat-cell *matCellDef="let stat">{{ stat.itemCount }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalPrice">
+              <th mat-header-cell *matHeaderCellDef>Total Price</th>
+              <td mat-cell *matCellDef="let stat">{{ stat.totalPrice | currency:'EUR':'symbol':'1.2-2' }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+
+          <div class="totals-section">
+            <strong>Total Items: {{ totalItemCount }} | Total Value: {{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</strong>
+          </div>
         </div>
         <div class="no-data" *ngIf="!isLoadingStats && approvalStatsByClient.length === 0">
           <p>No approval statistics available.</p>

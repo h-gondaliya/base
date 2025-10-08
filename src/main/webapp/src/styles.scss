@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+// Angular Material Theme - Updated for Material 3
+@use '@angular/material' as mat;
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+@include mat.core();
+
+// Define a light theme
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+  ),
+));
+
+// Apply the theme to Angular Material components.
+@include mat.all-component-themes($light-theme);
+
+// Reset some basic styling
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
