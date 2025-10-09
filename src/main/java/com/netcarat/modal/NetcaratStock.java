@@ -1,13 +1,21 @@
 package com.netcarat.modal;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Setter
+@Getter
+@AllArgsConstructor
 @Entity
 @Table(name = "netcarat_stock")
 public class NetcaratStock {
 
+    // Getters and Setters
     @Id
     private Long id;
 
@@ -20,8 +28,9 @@ public class NetcaratStock {
     @Column(name = "diamond_weight", precision = 10, scale = 2)
     private BigDecimal diamondWeight;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "gold_kt", length = 10)
-    private String goldKt;
+    private GoldKt goldKt;
 
     @Column(name = "colour_stone_weight", precision = 10, scale = 2)
     private BigDecimal colourStoneWeight;
@@ -29,8 +38,9 @@ public class NetcaratStock {
     @Column(name = "colour_stone_type", length = 50)
     private String colourStoneType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "product_category", length = 10)
-    private String productCategory;
+    private ProductCategory productCategory;
 
     @Column(name = "design_number", length = 50)
     private String designNumber;
@@ -57,148 +67,4 @@ public class NetcaratStock {
     // Default constructor
     public NetcaratStock() {}
 
-    // Constructor with all fields
-    public NetcaratStock(Long id, BigDecimal grossWeight, Integer diamondPieces,
-                         BigDecimal diamondWeight, String goldKt, BigDecimal colourStoneWeight,
-                         String colourStoneType, String productCategory, String designNumber,
-                         BigDecimal price, BigDecimal soldPrice, String paymentType,
-                         Client client, LocalDate sellDate, String description) {
-        this.id = id;
-        this.grossWeight = grossWeight;
-        this.diamondPieces = diamondPieces;
-        this.diamondWeight = diamondWeight;
-        this.goldKt = goldKt;
-        this.colourStoneWeight = colourStoneWeight;
-        this.colourStoneType = colourStoneType;
-        this.productCategory = productCategory;
-        this.designNumber = designNumber;
-        this.price = price;
-        this.soldPrice = soldPrice;
-        this.paymentType = paymentType;
-        this.client = client;
-        this.sellDate = sellDate;
-        this.description = description;
-    }
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BigDecimal getGrossWeight() {
-        return grossWeight;
-    }
-
-    public void setGrossWeight(BigDecimal grossWeight) {
-        this.grossWeight = grossWeight;
-    }
-
-    public Integer getDiamondPieces() {
-        return diamondPieces;
-    }
-
-    public void setDiamondPieces(Integer diamondPieces) {
-        this.diamondPieces = diamondPieces;
-    }
-
-    public BigDecimal getDiamondWeight() {
-        return diamondWeight;
-    }
-
-    public void setDiamondWeight(BigDecimal diamondWeight) {
-        this.diamondWeight = diamondWeight;
-    }
-
-    public String getGoldKt() {
-        return goldKt;
-    }
-
-    public void setGoldKt(String goldKt) {
-        this.goldKt = goldKt;
-    }
-
-    public BigDecimal getColourStoneWeight() {
-        return colourStoneWeight;
-    }
-
-    public void setColourStoneWeight(BigDecimal colourStoneWeight) {
-        this.colourStoneWeight = colourStoneWeight;
-    }
-
-    public String getColourStoneType() {
-        return colourStoneType;
-    }
-
-    public void setColourStoneType(String colourStoneType) {
-        this.colourStoneType = colourStoneType;
-    }
-
-    public String getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(String productCatagory) {
-        this.productCategory = productCatagory;
-    }
-
-    public String getDesignNumber() {
-        return designNumber;
-    }
-
-    public void setDesignNumber(String designNumber) {
-        this.designNumber = designNumber;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public BigDecimal getSoldPrice() {
-        return soldPrice;
-    }
-
-    public void setSoldPrice(BigDecimal soldPrice) {
-        this.soldPrice = soldPrice;
-    }
-
-    public String getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
-    }
-
-
-    public LocalDate getSellDate() {
-        return sellDate;
-    }
-
-    public void setSellDate(LocalDate sellDate) {
-        this.sellDate = sellDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 }

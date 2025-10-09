@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface NetcaratStockRepository extends JpaRepository<NetcaratStock, Long> {
-    List<NetcaratStock> findByProductCatagory(String productCatagory);
+    List<NetcaratStock> findByProductCategory(String productCategory);
     List<NetcaratStock> findByClientId(Integer clientId);
     List<NetcaratStock> findByPaymentType(String paymentType);
     
