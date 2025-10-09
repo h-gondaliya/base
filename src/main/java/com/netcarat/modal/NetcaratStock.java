@@ -29,8 +29,8 @@ public class NetcaratStock {
     @Column(name = "colour_stone_type", length = 50)
     private String colourStoneType;
 
-    @Column(name = "product_catagory", length = 10)
-    private String productCatagory;
+    @Column(name = "product_category", length = 10)
+    private String productCategory;
 
     @Column(name = "design_number", length = 50)
     private String designNumber;
@@ -58,11 +58,11 @@ public class NetcaratStock {
     public NetcaratStock() {}
 
     // Constructor with all fields
-    public NetcaratStock(Long id, BigDecimal grossWeight, Integer diamondPieces, 
-                        BigDecimal diamondWeight, String goldKt, BigDecimal colourStoneWeight,
-                        String colourStoneType, String productCatagory, String designNumber,
-                        BigDecimal price, BigDecimal soldPrice, String paymentType,
-                        Client client, LocalDate sellDate, String description) {
+    public NetcaratStock(Long id, BigDecimal grossWeight, Integer diamondPieces,
+                         BigDecimal diamondWeight, String goldKt, BigDecimal colourStoneWeight,
+                         String colourStoneType, String productCategory, String designNumber,
+                         BigDecimal price, BigDecimal soldPrice, String paymentType,
+                         Client client, LocalDate sellDate, String description) {
         this.id = id;
         this.grossWeight = grossWeight;
         this.diamondPieces = diamondPieces;
@@ -70,7 +70,7 @@ public class NetcaratStock {
         this.goldKt = goldKt;
         this.colourStoneWeight = colourStoneWeight;
         this.colourStoneType = colourStoneType;
-        this.productCatagory = productCatagory;
+        this.productCategory = productCategory;
         this.designNumber = designNumber;
         this.price = price;
         this.soldPrice = soldPrice;
@@ -137,12 +137,12 @@ public class NetcaratStock {
         this.colourStoneType = colourStoneType;
     }
 
-    public String getProductCatagory() {
-        return productCatagory;
+    public String getProductCategory() {
+        return productCategory;
     }
 
-    public void setProductCatagory(String productCatagory) {
-        this.productCatagory = productCatagory;
+    public void setProductCategory(String productCatagory) {
+        this.productCategory = productCatagory;
     }
 
     public String getDesignNumber() {
