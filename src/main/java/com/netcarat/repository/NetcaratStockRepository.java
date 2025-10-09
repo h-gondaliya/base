@@ -9,10 +9,10 @@ import java.util.List;
 
 @Repository
 public interface NetcaratStockRepository extends JpaRepository<NetcaratStock, Long> {
-    List<NetcaratStock> findByProductCategory(String productCategory);
-    List<NetcaratStock> findByClientId(Integer clientId);
-    List<NetcaratStock> findByPaymentType(String paymentType);
-    
+
     @Query("SELECT COUNT(n) FROM NetcaratStock n WHERE n.soldPrice IS NULL AND n.paymentType IS NULL")
     long countUnsoldItems();
+    
+    @Query("SELECT n.productCategory, COUNT(n) FROM NetcaratStock n GROUP BY n.productCategory")
+    List<Object[]> countByProductCategory();
 }

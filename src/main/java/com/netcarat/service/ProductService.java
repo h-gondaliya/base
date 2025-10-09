@@ -1,12 +1,15 @@
 package com.netcarat.service;
 
 import com.netcarat.dto.ClientApprovalStatsDto;
+import com.netcarat.modal.ProductCategory;
 import com.netcarat.repository.ApprovalRepository;
 import com.netcarat.repository.NetcaratStockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,16 +34,6 @@ public class ProductService {
     }
 
     /**
-     * Get the count of unsold items
-     * Unsold items are items where sold_price and payment_type are not available (null)
-     * 
-     * @return count of unsold items
-     */
-    public long getTotalUnsoldItemsCount() {
-        return stockRepository.countUnsoldItems();
-    }
-
-    /**
      * Get the total count of items in approval table per client and also total price
      * 
      * @return list of client approval statistics containing client info, item count, and total price
@@ -55,5 +48,27 @@ public class ProductService {
                 (BigDecimal) row[2]      // total price
             ))
             .collect(Collectors.toList());
+    }
+
+    /**
+     * Get the count of products grouped by product category
+     * 
+     * @return map containing product category as key and count as value
+     */
+    public Map<ProductCategory, Long> getProductCountByCategory() {
+        List<Object[]> results = stockRepository.countByProductCategory();
+        Map<ProductCategory, Long> categoryCountMap = new HashMap<>();
+        
+        for (Object[] result : results) {
+            ProductCategory category = (ProductCategory) result[0];
+            Long count = (Long) result[1];
+            
+            // Skip records with null category to avoid ClassCastException
+            if (category != null) {
+                categoryCountMap.put(category, count);
+            }
+        }
+        
+        return categoryCountMap;
     }
 }
