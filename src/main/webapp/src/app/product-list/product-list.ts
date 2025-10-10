@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -16,6 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './product-list.scss'
 })
 export class ProductList {
+  constructor(private router: Router) {
+  }
+
   // Product list management
   productId: string = '';
   productList: string[] = [];
@@ -42,5 +46,9 @@ export class ProductList {
     if (index > -1) {
       this.productList.splice(index, 1);
     }
+  }
+
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
   }
 }
