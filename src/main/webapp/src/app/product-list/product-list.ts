@@ -51,4 +51,14 @@ export class ProductList {
   navigateToDashboard() {
     this.router.navigate(['/dashboard']);
   }
+
+  createInvoice() {
+    // TODO: Implement invoice creation logic
+    console.log('Creating invoice for products:', this.productList);
+  }
+
+  createApproval() {
+    // TODO: Implement approval creation logic
+    console.log('Creating approval for products:', this.productList);
+  }
 }

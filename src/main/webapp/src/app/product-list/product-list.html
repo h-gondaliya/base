@@ -47,6 +47,21 @@
               </mat-list-item>
             }
           </mat-list>
+
+          <div class="action-buttons">
+            <button mat-raised-button
+                    color="primary"
+                    (click)="createInvoice()"
+                    class="action-button">
+              Create Invoice
+            </button>
+            <button mat-raised-button
+                    color="accent"
+                    (click)="createApproval()"
+                    class="action-button">
+              Create Approval
+            </button>
+          </div>
         </div>
 
         <div class="empty-state" *ngIf="productList.length === 0">

@@ -192,6 +192,50 @@
       }
     }
   }
+
+  .action-buttons {
+    margin-top: 32px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    padding-top: 24px;
+    border-top: 1px solid #e9ecef;
+
+    .action-button {
+      min-height: 48px;
+      padding: 0 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      &[color="primary"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+
+        &:hover {
+          background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
+        }
+      }
+
+      &[color="accent"] {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border: none;
+
+        &:hover {
+          background: linear-gradient(135deg, #e082ea 0%, #e4465b 100%);
+        }
+      }
+    }
+  }
 }
 
 .empty-state {
