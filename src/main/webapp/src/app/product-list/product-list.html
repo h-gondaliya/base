@@ -29,6 +29,13 @@
                   class="add-button">
             Add Product
           </button>
+          <button mat-icon-button
+                  color="primary"
+                  (click)="openQRScanner()"
+                  class="camera-button"
+                  matTooltip="Scan QR Code">
+            <mat-icon>camera_alt</mat-icon>
+          </button>
         </div>
 
         <div class="product-list-display" *ngIf="productList.length > 0">
