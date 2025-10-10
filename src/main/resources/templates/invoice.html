@@ -23,8 +23,10 @@
             align-items: center;
         }
         .company-logo {
-            max-height: 80px;
+            width: 120px;
+            height: 80px;
             margin-right: 20px;
+            object-fit: contain;
         }
         .company-details h1 {
             margin: 0;
@@ -78,23 +80,28 @@
         .total-section {
             text-align: right;
             margin-top: 20px;
+            width: 100%;
         }
         .total-row {
-            display: flex;
-            justify-content: flex-end;
             margin-bottom: 10px;
+            overflow: hidden;
+            width: 100%;
         }
         .total-label {
+            float: right;
             width: 200px;
             text-align: right;
             padding-right: 20px;
             font-weight: bold;
+            clear: right;
         }
         .total-value {
+            float: right;
             width: 100px;
             text-align: right;
             border-bottom: 1px solid #ddd;
             padding-bottom: 5px;
+            margin-right: 0;
         }
         .grand-total {
             font-size: 18px;

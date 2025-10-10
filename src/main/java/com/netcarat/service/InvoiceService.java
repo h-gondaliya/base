@@ -134,7 +134,7 @@ public class InvoiceService {
             LocalDate.now().plusDays(30),
             client,
             items,
-            new BigDecimal("10.0") // 10% tax rate
+            new BigDecimal("19.0") // 10% tax rate
         );
     }
 
@@ -261,7 +261,7 @@ public class InvoiceService {
             LocalDate.now().plusDays(30),
             clientDto,
             items,
-            new BigDecimal("10.0") // 10% tax rate
+            new BigDecimal("19.0") // 19% tax rate
         );
     }
 }
