@@ -1,0 +1,51 @@
+<div class="product-list-container">
+  <div class="product-list-header">
+    <h1>Product List Management</h1>
+  </div>
+
+  <div class="product-list-section">
+    <mat-card class="product-management-card">
+      <mat-card-header>
+        <mat-card-title>Manage Products</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="product-input-section">
+          <mat-form-field appearance="outline" class="product-input">
+            <mat-label>Product ID</mat-label>
+            <input matInput
+                   [(ngModel)]="productId"
+                   placeholder="Enter product ID"
+                   (keyup.enter)="addProduct()">
+          </mat-form-field>
+          <button mat-raised-button
+                  color="primary"
+                  (click)="addProduct()"
+                  [disabled]="productId.trim() === '' || productList.includes(productId.trim())"
+                  class="add-button">
+            Add Product
+          </button>
+        </div>
+
+        <div class="product-list-display" *ngIf="productList.length > 0">
+          <h4>Product List ({{ productList.length }} items)</h4>
+          <mat-list>
+            <mat-list-item *ngFor="let product of productList">
+              <div matListItemTitle>{{ product }}</div>
+              <button mat-icon-button
+                      color="warn"
+                      (click)="removeProduct(product)"
+                      matListItemMeta
+                      aria-label="Delete product">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+
+        <div class="empty-state" *ngIf="productList.length === 0">
+          <p>No products added yet. Enter a product ID and click "Add Product" to get started.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

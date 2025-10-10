@@ -1,0 +1,245 @@
+.product-list-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 40px 20px;
+}
+
+.product-list-header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h1 {
+    color: #333;
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.product-list-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.product-management-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .mat-mdc-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 24px;
+
+    .mat-mdc-card-title {
+      color: white;
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .mat-mdc-card-content {
+    padding: 32px;
+  }
+}
+
+.product-input-section {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 32px;
+
+  .product-input {
+    flex: 1;
+
+    .mat-mdc-form-field {
+      width: 100%;
+
+      .mat-mdc-input-element {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      .mat-mdc-form-field-outline {
+        border-radius: 8px;
+      }
+
+      &.mat-focused .mat-mdc-form-field-outline-thick {
+        border-color: #667eea;
+      }
+    }
+  }
+
+  .add-button {
+    height: 56px;
+    padding: 0 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.product-list-display {
+  h4 {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 2px;
+    }
+  }
+
+  .mat-mdc-list {
+    padding: 0;
+
+    .mat-mdc-list-item {
+      background: #f8f9fa;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      padding: 16px 20px;
+      border: 1px solid #e9ecef;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #e8f2ff;
+        border-color: #667eea;
+        transform: translateX(4px);
+      }
+
+      .mat-mdc-list-item-unscoped-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        div[matListItemTitle] {
+          font-size: 16px;
+          font-weight: 500;
+          color: #333;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+
+          &::before {
+            content: '#';
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+          }
+        }
+
+        button[mat-icon-button] {
+          background: #fff5f5;
+          border: 1px solid #fed7d7;
+          border-radius: 8px;
+          width: 40px;
+          height: 40px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: #fee;
+            border-color: #fc8181;
+            transform: scale(1.1);
+          }
+
+          .mat-icon {
+            color: #e53e3e;
+          }
+        }
+      }
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+
+  p {
+    font-size: 18px;
+    margin: 0;
+    line-height: 1.5;
+
+    &::before {
+      content: '📦';
+      display: block;
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .product-list-container {
+    padding: 20px 10px;
+  }
+
+  .product-input-section {
+    flex-direction: column;
+    align-items: stretch;
+
+    .add-button {
+      height: 48px;
+      margin-top: 16px;
+    }
+  }
+
+  .product-management-card .mat-mdc-card-content {
+    padding: 24px;
+  }
+}
+
+// Animation keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product-management-card {
+  animation: fadeInUp 0.6s ease-out;
+}

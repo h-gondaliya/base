@@ -87,4 +87,9 @@ export class DashboardComponent implements OnInit {
   get totalPrice(): number {
     return this.approvalStatsByClient.reduce((total, stat) => total + stat.totalPrice, 0);
   }
+
+  // Navigate to product list page
+  navigateToProductList() {
+    this.router.navigate(['/product-list']);
+  }
 }
