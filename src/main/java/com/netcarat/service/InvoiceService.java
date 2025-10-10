@@ -198,7 +198,7 @@ public class InvoiceService {
      */
     private List<NetcaratStock> validateProducts(List<Long> productIds, Long clientId) {
         // Check if all products exist
-        List<NetcaratStock> products = stockRepository.findByIdIn(productIds);
+        List<NetcaratStock> products = stockRepository.findAllById(productIds);
         if (products.size() != productIds.size()) {
             List<Long> foundIds = products.stream().map(NetcaratStock::getId).collect(Collectors.toList());
             List<Long> notFoundIds = productIds.stream()

@@ -17,10 +17,7 @@ public interface NetcaratStockRepository extends JpaRepository<NetcaratStock, Lo
     
     @Query("SELECT n.productCategory, COUNT(n) FROM NetcaratStock n GROUP BY n.productCategory")
     List<Object[]> countByProductCategory();
-    
-    @Query("SELECT n FROM NetcaratStock n WHERE n.id IN :productIds")
-    List<NetcaratStock> findByIdIn(@Param("productIds") List<Long> productIds);
-    
+
     @Query("SELECT n FROM NetcaratStock n WHERE n.id IN :productIds AND (n.soldPrice IS NOT NULL OR n.paymentType IS NOT NULL)")
     List<NetcaratStock> findSoldProductsByIdIn(@Param("productIds") List<Long> productIds);
 }

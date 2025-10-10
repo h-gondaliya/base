@@ -28,9 +28,9 @@ public class NetcaratStock {
     @Column(name = "diamond_weight", precision = 10, scale = 2)
     private BigDecimal diamondWeight;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "gold_kt", length = 10)
-    private GoldKt goldKt;
+    @Convert(converter = KaratTypeConverter.class)
+    private KaratType karatType;
 
     @Column(name = "colour_stone_weight", precision = 10, scale = 2)
     private BigDecimal colourStoneWeight;
