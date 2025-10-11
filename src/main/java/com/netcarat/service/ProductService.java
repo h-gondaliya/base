@@ -1,6 +1,7 @@
 package com.netcarat.service;
 
 import com.netcarat.dto.ClientApprovalStatsDto;
+import com.netcarat.modal.NetcaratStock;
 import com.netcarat.modal.ProductCategory;
 import com.netcarat.repository.ApprovalRepository;
 import com.netcarat.repository.NetcaratStockRepository;
@@ -38,6 +39,14 @@ public class ProductService {
         return stockRepository.countUnsoldItems();
     }
 
+
+    public List<NetcaratStock> findPhysicallyAvailableStockItem() {
+        return stockRepository.findPhysicallyAvailableStockItem();
+    }
+
+    public List<NetcaratStock> findVirtuallyAvailableStockItems() {
+        return stockRepository.findVirtuallyAvailableStockItems();
+    }
     /**
      * Get the total count of items in approval table per client and also total price
      * 

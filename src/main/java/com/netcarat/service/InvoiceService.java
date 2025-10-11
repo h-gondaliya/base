@@ -21,6 +21,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class InvoiceService {
@@ -40,6 +42,9 @@ public class InvoiceService {
     @Autowired
     private ApprovalRepository approvalRepository;
 
+    @Autowired
+    private ProductService productService;
+
     @Transactional
     public Invoice createInvoice(CreateInvoiceRequestDto request) {
         
@@ -50,6 +55,18 @@ public class InvoiceService {
         String description = request.getDescription();
         InvoiceType invoiceType = request.getInvoiceType();
         BigDecimal tax = request.getTax();
+        
+        // Validate all products are available in virtualStockList
+        List<NetcaratStock> virtualStockList = productService.findVirtuallyAvailableStockItems();
+        Set<Long> availableProductIds = virtualStockList.stream()
+                .map(NetcaratStock::getId)
+                .collect(Collectors.toSet());
+        
+        for (Long productId : productIds) {
+            if (!availableProductIds.contains(productId)) {
+                throw new IllegalArgumentException("Product with id " + productId + " is not available in virtual stock");
+            }
+        }
         
         // Validate client exists
         Optional<Client> clientOpt = clientRepository.findById(clientId);
