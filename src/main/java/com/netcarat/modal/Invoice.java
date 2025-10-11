@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Setter
 @Getter
@@ -22,10 +21,6 @@ public class Invoice {
 
     @Column(name = "invoice_number", nullable = false, length = 100)
     private String invoiceNumber;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "invoice_id")
-    private List<NetcaratStock> products;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
