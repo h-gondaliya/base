@@ -1,6 +1,7 @@
 package com.netcarat.controller;
 
 import com.netcarat.dto.ClientApprovalStatsDto;
+import com.netcarat.dto.StockCountDto;
 import com.netcarat.modal.ProductCategory;
 import com.netcarat.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,10 +31,12 @@ public class ProductController {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved available products count"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<Long> getAvailableProductsCount() {
+    public ResponseEntity<StockCountDto> getAvailableProductsCount() {
         try {
-            long availableCount = productService.getAvailableProductsCount();
-            return ResponseEntity.ok(availableCount);
+            long availableCount = productService.getPhysicalCount();
+            long virtualAvailableCount = productService.getVirtualCount();
+            StockCountDto stockCountDto = new StockCountDto(availableCount, virtualAvailableCount);
+            return ResponseEntity.ok(stockCountDto);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

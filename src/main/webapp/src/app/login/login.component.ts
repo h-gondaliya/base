@@ -33,6 +33,7 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   onLogin() {
+    this.authService.removeToken();
     if (!this.loginRequest.username || !this.loginRequest.password) {
       this.errorMessage = 'Please enter both username and password';
       return;

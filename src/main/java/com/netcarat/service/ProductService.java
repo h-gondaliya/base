@@ -23,14 +23,19 @@ public class ProductService {
 
     /**
      * Get the count of available products
-     * Available products = Total items in stock table - Approval items
-     * 
+     * Physically Available products = Total items in stock table - Approval items
      * @return count of available products
      */
-    public long getAvailableProductsCount() {
-        long totalStockCount = stockRepository.countUnsoldItems();
-        long approvedProductsCount = approvalRepository.countDistinctApprovedProducts();
-        return totalStockCount - approvedProductsCount;
+    public long getPhysicalCount() {
+        return stockRepository.countAvailableItems();
+    }
+
+    /**
+     * Total stock count (Physical + Approval)
+     * @return count of available products
+     */
+    public long getVirtualCount() {
+        return stockRepository.countUnsoldItems();
     }
 
     /**

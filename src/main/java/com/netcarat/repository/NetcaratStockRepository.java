@@ -3,21 +3,25 @@ package com.netcarat.repository;
 import com.netcarat.modal.NetcaratStock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface NetcaratStockRepository extends JpaRepository<NetcaratStock, Long> {
 
-    @Query("SELECT COUNT(n) FROM NetcaratStock n WHERE n.soldPrice IS NULL AND n.paymentType IS NULL")
+    @Query("SELECT COUNT(n) FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp)")
     long countUnsoldItems();
-    
+
+    @Query("SELECT COUNT(n) FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp) AND n.id NOT IN (SELECT ap.product.id FROM Approval ap)")
+    long countAvailableItems();
+
     @Query("SELECT n.productCategory, COUNT(n) FROM NetcaratStock n GROUP BY n.productCategory")
     List<Object[]> countByProductCategory();
 
-    @Query("SELECT n FROM NetcaratStock n WHERE n.id IN :productIds AND (n.soldPrice IS NOT NULL OR n.paymentType IS NOT NULL)")
-    List<NetcaratStock> findSoldProductsByIdIn(@Param("productIds") List<Long> productIds);
+    @Query("SELECT n FROM NetcaratStock n WHERE n.paymentType IS NOT NULL AND n.paymentType != '' AND n.soldPrice IS NOT NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp)")
+    List<NetcaratStock> findUnsoldItems();
+
+    @Query("SELECT n FROM NetcaratStock n WHERE n.paymentType IS NOT NULL AND n.paymentType != '' AND n.soldPrice IS NOT NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp) AND n.id NOT IN (SELECT ap.product.id FROM Approval ap)")
+    List<NetcaratStock> findAvailableItems();
 }

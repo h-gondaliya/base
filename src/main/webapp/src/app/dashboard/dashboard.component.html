@@ -16,10 +16,20 @@
 
         <mat-card class="info-card">
           <mat-card-header>
-            <mat-card-title>Available Products</mat-card-title>
+            <mat-card-title>Physical Products</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <p class="stock-count">{{ availableProductsCount }}</p>
+            <p class="stock-count">{{ physicalCount }}</p>
+            <small>Total physical Count</small>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <mat-card-header>
+            <mat-card-title>Total Virtual Count</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="stock-count">{{ virtualCount }}</p>
             <small>Total physical stock count</small>
           </mat-card-content>
         </mat-card>

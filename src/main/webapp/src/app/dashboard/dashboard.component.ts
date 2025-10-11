@@ -18,7 +18,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class DashboardComponent implements OnInit {
   username: string = '';
   token: string = '';
-  availableProductsCount: number = 0;
+  physicalCount: number = 0;
+  virtualCount: number = 0;
   approvalStatsByClient: ClientApprovalStats[] = [];
   isLoadingStats: boolean = false;
   displayedColumns: string[] = ['clientName', 'itemCount', 'totalPrice'];
@@ -51,7 +52,8 @@ export class DashboardComponent implements OnInit {
     this.productApiService.getAvailableProductsCount()
       .subscribe({
         next: (count) => {
-          this.availableProductsCount = count;
+          this.physicalCount = count.physicalStockCount;
+          this.virtualCount = count.virtualStockCount;
         },
         error: (error) => {
           console.error('Error loading available products count:', error);

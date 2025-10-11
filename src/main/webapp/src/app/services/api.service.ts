@@ -10,6 +10,11 @@ export interface ClientApprovalStats {
   totalPrice: number;
 }
 
+export interface AvailableProductCount {
+  physicalStockCount: number;
+  virtualStockCount: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,9 +26,9 @@ export class ApiService {
    * Get the count of available products
    * @returns Observable<number> - The count of available products
    */
-  getAvailableProductsCount(): Observable<number> {
+  getAvailableProductsCount(): Observable<AvailableProductCount> {
     const headers = this.getAuthHeaders();
-    return this.http.get<number>(`${environment.apiUrl}/products/available/count`, { headers });
+    return this.http.get<AvailableProductCount>(`${environment.apiUrl}/products/available/count`, { headers });
   }
 
   /**
