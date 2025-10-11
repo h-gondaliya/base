@@ -1,5 +1,6 @@
 package com.netcarat.service;
 
+import com.netcarat.dto.CreateInvoiceRequestDto;
 import com.netcarat.modal.Invoice;
 import com.netcarat.modal.InvoiceType;
 import com.netcarat.modal.Client;
@@ -40,8 +41,15 @@ public class InvoiceService {
     private ApprovalRepository approvalRepository;
 
     @Transactional
-    public Invoice createInvoice(List<Long> productIds, Long clientId, BigDecimal discount, 
-                               String description, InvoiceType invoiceType, BigDecimal tax) {
+    public Invoice createInvoice(CreateInvoiceRequestDto request) {
+        
+        // Extract parameters from DTO
+        List<Long> productIds = request.getProductIds();
+        Long clientId = request.getClientId();
+        BigDecimal discount = request.getDiscount();
+        String description = request.getDescription();
+        InvoiceType invoiceType = request.getInvoiceType();
+        BigDecimal tax = request.getTax();
         
         // Validate client exists
         Optional<Client> clientOpt = clientRepository.findById(clientId);

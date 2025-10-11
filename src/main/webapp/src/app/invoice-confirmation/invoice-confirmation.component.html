@@ -1,0 +1,76 @@
+<div class="invoice-confirmation-container">
+  <div class="invoice-confirmation-header">
+    <h1>Create Invoice - Step 2</h1>
+    <p>Configure your invoice settings and select a client</p>
+  </div>
+
+  <button mat-button class="back-button" (click)="onBack()">
+    <mat-icon>arrow_back</mat-icon>
+    Back to Product List
+  </button>
+
+  <div class="confirmation-section">
+    <mat-card class="confirmation-card">
+      <mat-card-header>
+        <mat-card-title>Invoice Configuration</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <!-- Product Summary -->
+        <div class="product-summary">
+          <h4>Selected Products ({{ productList.length }} items)</h4>
+          <div class="product-list-display">
+            <mat-list>
+              <mat-list-item *ngFor="let product of productList">
+                <div matListItemTitle>{{ product }}</div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+
+        <!-- Invoice Type Selection -->
+        <div class="type-selection">
+          <h4>Select Type</h4>
+          <mat-radio-group [(ngModel)]="selectedType" class="type-radio-group">
+            <mat-radio-button value="INVOICE">Invoice</mat-radio-button>
+            <mat-radio-button value="APPROVAL">Approval</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <!-- Client Selection -->
+        <div class="client-selection">
+          <h4>Select Client</h4>
+          <mat-form-field appearance="outline" class="client-dropdown">
+            <mat-label>Choose a client</mat-label>
+            <mat-select [(ngModel)]="selectedClientId" [disabled]="isLoading">
+              <mat-option *ngFor="let client of clients" [value]="client.id">
+                {{ client.clientName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button mat-raised-button
+                  color="primary"
+                  (click)="onConfirm()"
+                  [disabled]="!selectedClientId || isLoading || productList.length === 0"
+                  class="confirm-button">
+            <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
+            <span *ngIf="!isLoading">Confirm {{ selectedType === 'INVOICE' ? 'Invoice' : 'Approval' }}</span>
+            <span *ngIf="isLoading">Processing...</span>
+          </button>
+
+          <button mat-button
+                  (click)="onBack()"
+                  [disabled]="isLoading"
+                  class="cancel-button">
+            Cancel
+          </button>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

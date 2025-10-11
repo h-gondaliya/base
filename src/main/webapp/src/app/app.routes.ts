@@ -6,5 +6,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) },
   { path: 'product-list', loadComponent: () => import('./product-list/product-list').then(m => m.ProductList) },
+  { path: 'invoice-confirmation', loadComponent: () => import('./invoice-confirmation/invoice-confirmation.component').then(m => m.InvoiceConfirmationComponent) },
   { path: '**', redirectTo: '/login' }
 ];

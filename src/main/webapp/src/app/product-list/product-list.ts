@@ -57,8 +57,17 @@ export class ProductList {
   }
 
   createInvoice() {
-    // TODO: Implement invoice creation logic
-    console.log('Creating invoice for products:', this.productList);
+    if (this.productList.length === 0) {
+      console.log('No products to create invoice');
+      return;
+    }
+
+    // Navigate to invoice confirmation step with product list as query parameters
+    this.router.navigate(['/invoice-confirmation'], {
+      queryParams: {
+        products: JSON.stringify(this.productList)
+      }
+    });
   }
 
   createApproval() {
