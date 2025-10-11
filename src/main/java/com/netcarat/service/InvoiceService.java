@@ -57,8 +57,8 @@ public class InvoiceService {
         BigDecimal tax = request.getTax();
         
         // Validate all products are available in virtualStockList
-        List<NetcaratStock> virtualStockList = productService.findVirtuallyAvailableStockItems();
-        Set<Long> availableProductIds = virtualStockList.stream()
+        List<NetcaratStock> physicallyAvailableStockItem = productService.findPhysicallyAvailableStockItem();
+        Set<Long> availableProductIds = physicallyAvailableStockItem.stream()
                 .map(NetcaratStock::getId)
                 .collect(Collectors.toSet());
         

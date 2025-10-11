@@ -1,9 +1,15 @@
 package com.netcarat.modal;
 
+import lombok.Getter;
+
+@Getter
 public enum KaratType {
+    KT_14("14KT"),
+    KT_10("10KT"),
+    KT_9("9KT"),
     KT_18("18KT"),
-    KT_22("22KT"),
-    KT_24("24KT");
+    P950("S950"),
+    S925("S925");
 
     private final String value;
 
@@ -11,16 +17,17 @@ public enum KaratType {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public static KaratType fromValue(String value) {
+        if (value == null) {
+            return null;
+        }
         for (KaratType type : KaratType.values()) {
             if (type.value.equals(value)) {
                 return type;
             }
         }
-        throw new IllegalArgumentException("Unknown karat type: " + value);
+        // Return null for unknown values instead of throwing exception
+        // This prevents JpaSystemException during AttributeConverter processing
+        return null;
     }
 }
