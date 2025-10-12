@@ -57,7 +57,7 @@ public class InvoiceService {
         BigDecimal tax = request.getTax();
         
         // Validate all products are available in virtualStockList
-        List<NetcaratStock> physicallyAvailableStockItem = productService.findPhysicallyAvailableStockItem();
+        List<NetcaratStock> physicallyAvailableStockItem = productService.findVirtuallyAvailableStockItems();
         Set<Long> availableProductIds = physicallyAvailableStockItem.stream()
                 .map(NetcaratStock::getId)
                 .collect(Collectors.toSet());
@@ -111,6 +111,12 @@ public class InvoiceService {
     
     private void handleInvoiceTypeProducts(List<NetcaratStock> products, Client client, 
                                          Invoice invoice, BigDecimal discount) {
+        // Remove existing approvals for these products
+        List<Long> productIds = products.stream()
+                .map(NetcaratStock::getId)
+                .collect(Collectors.toList());
+        removeExistingApprovals(productIds);
+
         for (NetcaratStock product : products) {
             // Calculate price with discount applied
             BigDecimal originalPrice = product.getPrice();
@@ -131,7 +137,14 @@ public class InvoiceService {
             soldProductsRepository.save(soldProduct);
         }
     }
-    
+
+    private void removeExistingApprovals(List<Long> productIds) {
+        List<Approval> existingApprovals = approvalRepository.findByProductIdIn(productIds);
+        if (!existingApprovals.isEmpty()) {
+            approvalRepository.deleteAll(existingApprovals);
+        }
+    }
+
     private void handleApprovalTypeProducts(List<NetcaratStock> products, Client client, 
                                           Invoice invoice) {
         for (NetcaratStock product : products) {

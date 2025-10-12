@@ -21,4 +21,6 @@ public interface ApprovalRepository extends JpaRepository<Approval, Long> {
     
     @Query("SELECT a FROM Approval a WHERE a.product.id IN :productIds")
     List<Approval> findApprovalsByProductIds(@Param("productIds") List<Long> productIds);
+
+    List<Approval> findByProductIdIn(List<Long> productIds);
 }
