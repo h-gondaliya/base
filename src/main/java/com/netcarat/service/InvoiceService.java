@@ -6,13 +6,11 @@ import com.netcarat.modal.InvoiceType;
 import com.netcarat.modal.Client;
 import com.netcarat.modal.NetcaratStock;
 import com.netcarat.modal.SoldProducts;
-import com.netcarat.modal.Approval;
 import com.netcarat.modal.PaymentType;
 import com.netcarat.repository.InvoiceRepository;
 import com.netcarat.repository.ClientRepository;
 import com.netcarat.repository.NetcaratStockRepository;
 import com.netcarat.repository.SoldProductsRepository;
-import com.netcarat.repository.ApprovalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +36,6 @@ public class InvoiceService {
 
     @Autowired
     private SoldProductsRepository soldProductsRepository;
-
-    @Autowired
-    private ApprovalRepository approvalRepository;
 
     @Autowired
     private ProductService productService;
@@ -96,21 +91,14 @@ public class InvoiceService {
         
         // Save invoice first to get the ID
         Invoice savedInvoice = invoiceRepository.save(invoice);
-        
-        // Handle products based on invoice type
-        if (invoiceType == InvoiceType.INVOICE) {
-            // For Invoice type: calculate prices, apply discount, save to SoldProducts
-            handleInvoiceTypeProducts(products, client, savedInvoice, discount);
-        } else if (invoiceType == InvoiceType.APPROVAL) {
-            // For approval type: save to approval table
-            handleApprovalTypeProducts(products, client, savedInvoice);
-        }
-        
+        handleProducts(products, client, savedInvoice, discount, invoiceType.equals(InvoiceType.APPROVAL));
+
         return savedInvoice;
     }
     
-    private void handleInvoiceTypeProducts(List<NetcaratStock> products, Client client, 
-                                         Invoice invoice, BigDecimal discount) {
+    private void handleProducts(List<NetcaratStock> products, Client client,
+                                Invoice invoice, BigDecimal discount, boolean isApprovalType) {
+
         // Remove existing approvals for these products
         List<Long> productIds = products.stream()
                 .map(NetcaratStock::getId)
@@ -131,7 +119,7 @@ public class InvoiceService {
             soldProduct.setProductId(product.getId());
             soldProduct.setClient(client);
             soldProduct.setSoldPrice(finalPrice);
-            soldProduct.setPaymentType(PaymentType.CASH); // Default payment type
+            soldProduct.setPaymentType(isApprovalType? PaymentType.APPROVAL : PaymentType.CASH); // Default payment type
             soldProduct.setInvoice(invoice);
             
             soldProductsRepository.save(soldProduct);
@@ -139,24 +127,9 @@ public class InvoiceService {
     }
 
     private void removeExistingApprovals(List<Long> productIds) {
-        List<Approval> existingApprovals = approvalRepository.findByProductIdIn(productIds);
+        List<SoldProducts> existingApprovals = soldProductsRepository.findSoldProductsByProductIdIn(productIds);
         if (!existingApprovals.isEmpty()) {
-            approvalRepository.deleteAll(existingApprovals);
-        }
-    }
-
-    private void handleApprovalTypeProducts(List<NetcaratStock> products, Client client, 
-                                          Invoice invoice) {
-        for (NetcaratStock product : products) {
-            // Create and save Approval
-            Approval approval = new Approval();
-            approval.setClient(client);
-            approval.setProduct(product);
-            approval.setApprovalAmount(product.getPrice());
-            approval.setApprovalDate(LocalDate.now());
-            approval.setInvoice(invoice.getInvoiceNumber());
-            
-            approvalRepository.save(approval);
+            soldProductsRepository.deleteAll(existingApprovals);
         }
     }
 

@@ -2,9 +2,11 @@ package com.netcarat.service;
 
 import com.netcarat.dto.ClientApprovalStatsDto;
 import com.netcarat.modal.NetcaratStock;
+import com.netcarat.modal.PaymentType;
 import com.netcarat.modal.ProductCategory;
-import com.netcarat.repository.ApprovalRepository;
+import com.netcarat.modal.SoldProducts;
 import com.netcarat.repository.NetcaratStockRepository;
+import com.netcarat.repository.SoldProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
@@ -18,9 +20,8 @@ public class ProductService {
 
     @Autowired
     private NetcaratStockRepository stockRepository;
-
     @Autowired
-    private ApprovalRepository approvalRepository;
+    private SoldProductsRepository soldProductsRepository;
 
     /**
      * Get the count of available products
@@ -53,15 +54,8 @@ public class ProductService {
      * @return list of client approval statistics containing client info, item count, and total price
      */
     public List<ClientApprovalStatsDto> getApprovalStatsByClient() {
-        List<Object[]> results = approvalRepository.getApprovalStatsByClient();
-        
-        return results.stream()
-            .map(row -> new ClientApprovalStatsDto(
-                (String) row[0],         // client name
-                (Long) row[1],           // item count
-                (BigDecimal) row[2]      // total price
-            ))
-            .collect(Collectors.toList());
+        List<SoldProducts> results = soldProductsRepository.findByPaymentType(PaymentType.APPROVAL);
+        return null;
     }
 
     /**

@@ -1,10 +1,18 @@
 package com.netcarat.modal;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "sold_products")
+@AllArgsConstructor
+@Getter
+@Setter
 public class SoldProducts {
 
     @Id
@@ -26,57 +34,10 @@ public class SoldProducts {
     @JoinColumn(name = "invoice_id", nullable = false)
     private Invoice invoice;
 
+    @Column(name = "description")
+    private String description;
+
     // Default constructor
     public SoldProducts() {}
 
-    // Constructor with all fields
-    public SoldProducts(Long productId, Client client, BigDecimal soldPrice, 
-                       PaymentType paymentType, Invoice invoice) {
-        this.productId = productId;
-        this.client = client;
-        this.soldPrice = soldPrice;
-        this.paymentType = paymentType;
-        this.invoice = invoice;
-    }
-
-    // Getters and Setters
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public BigDecimal getSoldPrice() {
-        return soldPrice;
-    }
-
-    public void setSoldPrice(BigDecimal soldPrice) {
-        this.soldPrice = soldPrice;
-    }
-
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
-    }
-
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
-    }
 }

@@ -13,7 +13,7 @@ public interface NetcaratStockRepository extends JpaRepository<NetcaratStock, Lo
     @Query("SELECT COUNT(n) FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp)")
     long countUnsoldItems();
 
-    @Query("SELECT COUNT(n) FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp) AND n.id NOT IN (SELECT ap.product.id FROM Approval ap)")
+    @Query("SELECT COUNT(n) FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp WHERE sp.paymentType != 'APPROVAL')")
     long countAvailableItems();
 
     @Query("SELECT n.productCategory, COUNT(n) FROM NetcaratStock n GROUP BY n.productCategory")
@@ -22,6 +22,6 @@ public interface NetcaratStockRepository extends JpaRepository<NetcaratStock, Lo
     @Query("SELECT n FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp)")
     List<NetcaratStock> findVirtuallyAvailableStockItems();
 
-    @Query("SELECT n FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp) AND n.id NOT IN (SELECT ap.product.id FROM Approval ap)")
+    @Query("SELECT n FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp WHERE sp.paymentType != 'APPROVAL')")
     List<NetcaratStock> findPhysicallyAvailableStockItem();
 }
