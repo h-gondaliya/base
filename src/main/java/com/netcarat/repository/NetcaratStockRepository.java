@@ -19,7 +19,7 @@ public interface NetcaratStockRepository extends JpaRepository<NetcaratStock, Lo
     @Query("SELECT n.productCategory, COUNT(n) FROM NetcaratStock n GROUP BY n.productCategory")
     List<Object[]> countByProductCategory();
 
-    @Query("SELECT n FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp)")
+    @Query("SELECT n FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp where sp.paymentType != 'APPROVAL')")
     List<NetcaratStock> findVirtuallyAvailableStockItems();
 
     @Query("SELECT n FROM NetcaratStock n WHERE n.paymentType IS NULL AND n.soldPrice IS NULL AND n.id NOT IN (SELECT sp.productId FROM SoldProducts sp WHERE sp.paymentType != 'APPROVAL')")

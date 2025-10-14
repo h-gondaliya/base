@@ -9,17 +9,16 @@ import com.netcarat.repository.NetcaratStockRepository;
 import com.netcarat.repository.SoldProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
     @Autowired
     private NetcaratStockRepository stockRepository;
+
     @Autowired
     private SoldProductsRepository soldProductsRepository;
 
@@ -41,10 +40,6 @@ public class ProductService {
     }
 
 
-    public List<NetcaratStock> findPhysicallyAvailableStockItem() {
-        return stockRepository.findPhysicallyAvailableStockItem();
-    }
-
     public List<NetcaratStock> findVirtuallyAvailableStockItems() {
         return stockRepository.findVirtuallyAvailableStockItems();
     }
@@ -55,7 +50,31 @@ public class ProductService {
      */
     public List<ClientApprovalStatsDto> getApprovalStatsByClient() {
         List<SoldProducts> results = soldProductsRepository.findByPaymentType(PaymentType.APPROVAL);
-        return null;
+        if (results != null && !results.isEmpty()) {
+            // Group by client and aggregate statistics
+            Map<String, ClientApprovalStatsDto> clientStatsMap = new HashMap<>();
+            
+            for (SoldProducts soldProduct : results) {
+                String clientName = soldProduct.getClient().getClientName();
+                
+                if (clientStatsMap.containsKey(clientName)) {
+                    // Update existing stats
+                    ClientApprovalStatsDto stats = clientStatsMap.get(clientName);
+                    stats.setItemCount(stats.getItemCount() + 1);
+                    stats.setTotalPrice(stats.getTotalPrice().add(soldProduct.getSoldPrice()));
+                } else {
+                    // Create new stats entry
+                    clientStatsMap.put(clientName, new ClientApprovalStatsDto(
+                        clientName, 
+                        1L, 
+                        soldProduct.getSoldPrice()
+                    ));
+                }
+            }
+            
+            return clientStatsMap.values().stream().collect(java.util.stream.Collectors.toList());
+        }
+        return java.util.Collections.emptyList();
     }
 
     /**
