@@ -90,6 +90,7 @@ public class InvoiceService {
         invoice.setDescription(description != null ? description : "");
         invoice.setTax(tax != null ? tax : BigDecimal.ZERO);
         invoice.setInvoiceDate(LocalDate.now());
+        invoice.setDueDate(LocalDate.now().plusDays(10));
         invoice.setCreatedBy("SYSTEM"); // Default value, could be updated based on authentication
         invoice.setInvoiceNumber(generateInvoiceNumber(client.getId()));
         

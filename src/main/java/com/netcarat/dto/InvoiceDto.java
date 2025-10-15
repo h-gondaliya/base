@@ -1,5 +1,6 @@
 package com.netcarat.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 public class InvoiceDto {
     private String invoiceNumber;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate invoiceDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dueDate;
     private ClientDto client;
     private List<InvoiceItemDto> invoiceItems;

@@ -343,6 +343,91 @@
   }
 }
 
+// Invoice List Navigation Section
+.invoice-list-navigation {
+  margin: 30px 0;
+
+  .navigation-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .mat-mdc-card-header {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+      color: white;
+      padding: 24px;
+
+      .mat-mdc-card-title {
+        color: white;
+        font-size: 22px;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        &::before {
+          content: '🧾';
+          font-size: 24px;
+        }
+      }
+    }
+
+    .mat-mdc-card-content {
+      padding: 32px;
+
+      p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 0 0 24px 0;
+      }
+
+      .nav-button {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 14px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        &::after {
+          content: '→';
+          font-size: 18px;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+
+          &::after {
+            transform: translateX(4px);
+          }
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
