@@ -94,4 +94,9 @@ export class DashboardComponent implements OnInit {
   navigateToProductList() {
     this.router.navigate(['/product-list']);
   }
+
+  // Navigate to invoice list page
+  navigateToInvoiceList() {
+    this.router.navigate(['/invoice-list']);
+  }
 }

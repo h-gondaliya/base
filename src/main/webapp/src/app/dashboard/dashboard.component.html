@@ -52,6 +52,24 @@
           </mat-card>
         </div>
 
+        <!-- Invoice Management Navigation -->
+        <div class="invoice-list-navigation">
+          <mat-card class="navigation-card">
+            <mat-card-header>
+              <mat-card-title>Invoice Management</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>View and manage all invoices with detailed information and statistics.</p>
+              <button mat-raised-button
+                      color="accent"
+                      (click)="navigateToInvoiceList()"
+                      class="nav-button">
+                Go to Invoice List
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
       </div>
 
       <div class="approval-stats-section">

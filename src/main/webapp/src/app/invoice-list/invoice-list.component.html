@@ -1,0 +1,80 @@
+<div class="invoice-list-container">
+  <div class="invoice-list-header">
+    <h1>Invoice Management</h1>
+  </div>
+
+  <button mat-button class="back-button" (click)="navigateToDashboard()">
+    <mat-icon>arrow_back</mat-icon>
+    Back to Dashboard
+  </button>
+
+  <div class="invoice-list-section">
+    <mat-card class="invoice-management-card">
+      <mat-card-header>
+        <mat-card-title>All Invoices</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="loading-indicator" *ngIf="isLoading">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          <p>Loading invoices...</p>
+        </div>
+
+        <div class="invoice-list-display" *ngIf="!isLoading && invoiceList.length > 0">
+          <h4>Invoice List ({{ invoiceList.length }} invoices)</h4>
+          <div class="invoice-table-container">
+            <table mat-table [dataSource]="invoiceList" class="mat-elevation-z8">
+              <ng-container matColumnDef="invoiceNumber">
+                <th mat-header-cell *matHeaderCellDef>Invoice Number</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.invoiceNumber }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="invoiceType">
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let invoice">
+                  <span class="invoice-type" [class.approval]="invoice.invoiceType === 'APPROVAL'" [class.cash]="invoice.invoiceType === 'CASH'">
+                    {{ invoice.invoiceType }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="clientName">
+                <th mat-header-cell *matHeaderCellDef>Client Name</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.clientName || 'N/A' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="totalItems">
+                <th mat-header-cell *matHeaderCellDef>Total Items</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.totalItems }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="totalPrice">
+                <th mat-header-cell *matHeaderCellDef>Total Price</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.totalPrice | currency:'EUR':'symbol':'1.2-2' }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+
+          <div class="totals-section">
+            <strong>Total Invoices: {{ invoiceList.length }} | Total Value: {{ getTotalValue() | currency:'EUR':'symbol':'1.2-2' }}</strong>
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="!isLoading && invoiceList.length === 0">
+          <mat-icon class="empty-icon">receipt_long</mat-icon>
+          <p>No invoices found. Create your first invoice to get started.</p>
+        </div>
+
+        <div class="error-state" *ngIf="errorMessage">
+          <mat-icon class="error-icon">error</mat-icon>
+          <p>{{ errorMessage }}</p>
+          <button mat-raised-button color="primary" (click)="loadInvoices()">
+            Retry
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

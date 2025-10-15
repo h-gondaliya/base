@@ -1,0 +1,248 @@
+.invoice-list-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 40px 20px;
+}
+
+.invoice-list-header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h1 {
+    color: #333;
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.back-button {
+  margin-bottom: 20px;
+  color: #667eea;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #5568d3;
+    transform: translateX(-2px);
+  }
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.invoice-list-section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.invoice-management-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .mat-mdc-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 24px;
+
+    .mat-mdc-card-title {
+      color: white;
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .mat-mdc-card-content {
+    padding: 32px;
+  }
+}
+
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #667eea;
+
+  p {
+    margin-top: 16px;
+    font-size: 16px;
+    color: #666;
+  }
+}
+
+.invoice-list-display {
+  h4 {
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 8px;
+  }
+}
+
+.invoice-table-container {
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .mat-mdc-table {
+    width: 100%;
+    background: white;
+
+    .mat-mdc-header-row {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+
+      .mat-mdc-header-cell {
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+        border-bottom: 2px solid #dee2e6;
+        padding: 16px;
+      }
+    }
+
+    .mat-mdc-row {
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #f8f9ff;
+      }
+
+      .mat-mdc-cell {
+        padding: 16px;
+        font-size: 14px;
+        color: #555;
+        border-bottom: 1px solid #f0f0f0;
+      }
+    }
+  }
+}
+
+.invoice-type {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.approval {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+    color: #d63031;
+  }
+
+  &.cash {
+    background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+    color: #00b894;
+  }
+}
+
+.totals-section {
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  border: 2px solid #dee2e6;
+}
+
+.empty-state, .error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  .empty-icon, .error-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  .empty-icon {
+    color: #667eea;
+  }
+
+  .error-icon {
+    color: #e74c3c;
+  }
+
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 24px;
+    max-width: 400px;
+    line-height: 1.5;
+  }
+
+  button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+      background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .invoice-list-container {
+    padding: 20px 10px;
+  }
+
+  .invoice-list-header h1 {
+    font-size: 24px;
+  }
+
+  .invoice-management-card .mat-mdc-card-content {
+    padding: 20px;
+  }
+
+  .invoice-table-container {
+    overflow-x: auto;
+
+    .mat-mdc-table {
+      min-width: 600px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .invoice-list-header h1 {
+    font-size: 20px;
+  }
+
+  .invoice-management-card .mat-mdc-card-content {
+    padding: 16px;
+  }
+
+  .totals-section {
+    font-size: 14px;
+    padding: 16px;
+  }
+}
