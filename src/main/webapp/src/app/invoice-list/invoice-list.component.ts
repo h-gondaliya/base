@@ -85,4 +85,8 @@ export class InvoiceListComponent implements OnInit {
   getTotalValue(): number {
     return this.invoiceList.reduce((total, invoice) => total + invoice.totalPrice, 0);
   }
+
+  navigateToInvoice(invoiceNumber: string) {
+    this.router.navigate(['/invoice', invoiceNumber]);
+  }
 }

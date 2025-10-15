@@ -1,0 +1,135 @@
+<div class="invoice-container">
+  <!-- Loading Spinner -->
+  <div class="loading-indicator" *ngIf="isLoading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <p>Loading invoice details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="errorMessage">
+    <mat-icon class="error-icon">error</mat-icon>
+    <p>{{ errorMessage }}</p>
+    <button mat-raised-button color="primary" (click)="loadInvoiceDetails()">
+      Retry
+    </button>
+    <button mat-button (click)="navigateBack()">
+      Back to Invoice List
+    </button>
+  </div>
+
+  <!-- Invoice Content -->
+  <div class="invoice-content" *ngIf="!isLoading && !errorMessage && invoiceData">
+    <!-- Header Actions -->
+    <div class="invoice-actions no-print">
+      <button mat-button class="back-button" (click)="navigateBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to List
+      </button>
+      <button mat-raised-button color="primary" (click)="printInvoice()">
+        <mat-icon>print</mat-icon>
+        Print Invoice
+      </button>
+    </div>
+
+    <!-- Professional Invoice Layout -->
+    <div class="invoice-document">
+      <!-- Company Header -->
+      <div class="invoice-header">
+        <div class="company-info">
+<!--          <img src="./assets/images/netcarat-logo.png" alt="NetCarat Logo" class="company-logo">-->
+          <div class="company-details">
+            <h1>NETCARAT</h1>
+            <p class="company-tagline">DIAMONDS & WATCHES</p>
+            <div class="company-contact">
+              <p>Premium Jewelry & Timepieces</p>
+              <p>Contact: info at netcarat.com | Phone: +1-555-123-4567</p>
+              <p>123 Diamond Street, Jewelry District, NY 10001</p>
+            </div>
+          </div>
+        </div>
+        <div class="invoice-meta">
+          <h2>INVOICE</h2>
+          <div class="invoice-details">
+            <p><strong>Invoice Number:</strong> {{ invoiceData.invoiceNumber }}</p>
+            <p><strong>Date:</strong> {{ invoiceData.invoiceDate }}</p>
+            <p><strong>Due Date:</strong> {{ invoiceData.dueDate }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill To Section -->
+      <div class="bill-to-section">
+        <div class="bill-to">
+          <h3>BILL TO:</h3>
+          <div class="client-details">
+            <p class="client-name">{{ invoiceData.client.name }}</p>
+            <p>{{ invoiceData.client.address }}</p>
+            <p *ngIf="invoiceData.client.email">{{ invoiceData.client.email }}</p>
+            <p *ngIf="invoiceData.client.phone">{{ invoiceData.client.phone }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Items Table -->
+      <div class="invoice-items">
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th>Item ID</th>
+              <th>Description</th>
+              <th>Payment Type</th>
+              <th class="amount-col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of invoiceData.invoiceItems">
+              <td>{{ item.productId }}</td>
+              <td>{{ item.description || 'Product Item' }}</td>
+              <td>
+                <span class="payment-type" [class]="item.paymentType.toLowerCase()">
+                  {{ item.paymentType }}
+                </span>
+              </td>
+              <td class="amount-col">{{ item.soldPrice | currency:'EUR':'symbol':'1.2-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Totals Section -->
+      <div class="invoice-totals">
+        <div class="totals-table">
+          <div class="total-row">
+            <span>Subtotal:</span>
+            <span>{{ invoiceData.subtotal | currency:'EUR':'symbol':'1.2-2' }}</span>
+          </div>
+          <div class="total-row">
+            <span>Tax Rate: {{ invoiceData.taxRate }}%</span>
+            <span>{{ invoiceData.taxAmount | currency:'EUR':'symbol':'1.2-2' }}</span>
+          </div>
+          <div class="total-row final-total">
+            <span><strong>Total Amount:</strong></span>
+            <span><strong>{{ invoiceData.totalAmount | currency:'EUR':'symbol':'1.2-2' }}</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="invoice-footer">
+        <div class="payment-terms">
+          <h4>Payment Terms & Conditions:</h4>
+          <ul>
+            <li>Payment is due within 30 days of invoice date</li>
+            <li>Late payments may incur additional charges</li>
+            <li>All items sold are subject to our standard terms and conditions</li>
+            <li>For inquiries, please contact us</li>
+          </ul>
+        </div>
+        <div class="thank-you">
+          <p><strong>Thank you for your business!</strong></p>
+          <p>We appreciate your trust in NetCarat for your luxury jewelry and timepiece needs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
