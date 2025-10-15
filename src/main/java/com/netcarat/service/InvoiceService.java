@@ -2,6 +2,9 @@ package com.netcarat.service;
 
 import com.netcarat.dto.CreateInvoiceRequestDto;
 import com.netcarat.dto.InvoiceListDto;
+import com.netcarat.dto.InvoiceDto;
+import com.netcarat.dto.InvoiceItemDto;
+import com.netcarat.dto.ClientDto;
 import com.netcarat.modal.Invoice;
 import com.netcarat.modal.InvoiceType;
 import com.netcarat.modal.Client;
@@ -163,6 +166,57 @@ public class InvoiceService {
                 totalItems,
                 totalPrice,
                 clientName
+        );
+    }
+    
+    /**
+     * Get comprehensive invoice details by invoice number
+     * Combines information from Invoice, Client, and SoldProducts using separate repository calls
+     */
+    public InvoiceDto getInvoiceDetailsByNumber(String invoiceNumber) {
+        // Get invoice by invoice number
+        Optional<Invoice> invoiceOpt = invoiceRepository.findByInvoiceNumber(invoiceNumber);
+        if (invoiceOpt.isEmpty()) {
+            throw new IllegalArgumentException("Invoice not found with number: " + invoiceNumber);
+        }
+        
+        Invoice invoice = invoiceOpt.get();
+        
+        // Get client information
+        Client client = invoice.getClient();
+        ClientDto clientDto = new ClientDto(
+                client.getClientName(),
+                client.getClientAddress(), 
+                client.getEmail(),
+                null // phone not available in Client entity
+        );
+        
+        // Get sold products for this invoice
+        List<SoldProducts> soldProducts = soldProductsRepository.findByInvoiceId(invoice.getId());
+        
+        // Convert sold products to DTOs
+        List<InvoiceItemDto> invoiceItems = soldProducts.stream()
+                .map(soldProduct -> new InvoiceItemDto(
+                        soldProduct.getProductId(),
+                        soldProduct.getSoldPrice(),
+                        soldProduct.getPaymentType(),
+                        soldProduct.getDescription()
+                ))
+                .collect(Collectors.toList());
+        
+        // Calculate subtotal from sold products
+        BigDecimal subtotal = soldProducts.stream()
+                .map(SoldProducts::getSoldPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        
+        // Create and return InvoiceDto
+        return new InvoiceDto(
+                invoice.getInvoiceNumber(),
+                invoice.getInvoiceDate(),
+                invoice.getDueDate(),
+                clientDto,
+                invoiceItems,
+                invoice.getTax()
         );
     }
 }

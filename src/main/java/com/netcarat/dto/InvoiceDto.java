@@ -45,7 +45,7 @@ public class InvoiceDto {
      */
     private void calculateTotals() {
         this.subtotal = invoiceItems.stream()
-                .map(InvoiceItemDto::getTotalPrice)
+                .map(InvoiceItemDto::getSoldPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         
         this.taxAmount = subtotal.multiply(taxRate.divide(new BigDecimal(100)));

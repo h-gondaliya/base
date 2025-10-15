@@ -36,6 +36,9 @@ public class Invoice {
     @Column(name = "invoice_date", nullable = false)
     private LocalDate invoiceDate;
 
+    @Column(name = "due_date")
+    private LocalDate dueDate;
+
     @Column(name = "created_by", nullable = false, length = 100)
     private String createdBy;
 

@@ -2,6 +2,7 @@ package com.netcarat.controller;
 
 import com.netcarat.dto.CreateInvoiceRequestDto;
 import com.netcarat.dto.InvoiceListDto;
+import com.netcarat.dto.InvoiceDto;
 import com.netcarat.modal.Invoice;
 import com.netcarat.service.InvoiceService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,6 +55,25 @@ public class InvoiceController {
         try {
             List<InvoiceListDto> invoices = invoiceService.getAllInvoices();
             return ResponseEntity.ok(invoices);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    @GetMapping("/details/{invoiceNumber}")
+    @Operation(summary = "Get invoice details by invoice number", 
+               description = "Retrieves comprehensive invoice information including invoice number, invoice date, client details, due date, list of products with all sold_products fields, tax, and calculated subtotal")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved invoice details"),
+        @ApiResponse(responseCode = "404", description = "Invoice not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<InvoiceDto> getInvoiceDetails(@PathVariable String invoiceNumber) {
+        try {
+            InvoiceDto invoiceDetails = invoiceService.getInvoiceDetailsByNumber(invoiceNumber);
+            return ResponseEntity.ok(invoiceDetails);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
