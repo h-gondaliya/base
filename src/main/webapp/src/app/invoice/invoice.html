@@ -1,4 +1,4 @@
-<div class="invoice-container">
+<div class="invoice-wrapper">
   <!-- Loading Spinner -->
   <div class="loading-indicator" *ngIf="isLoading">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
@@ -18,8 +18,8 @@
   </div>
 
   <!-- Invoice Content -->
-  <div class="invoice-content" *ngIf="!isLoading && !errorMessage && invoiceData">
-    <!-- Header Actions -->
+  <div *ngIf="!isLoading && !errorMessage && invoiceData" class="invoice-content">
+    <!-- Screen Only Actions -->
     <div class="invoice-actions no-print">
       <button mat-button class="back-button" (click)="navigateBack()">
         <mat-icon>arrow_back</mat-icon>
@@ -31,104 +31,111 @@
       </button>
     </div>
 
-    <!-- Professional Invoice Layout -->
+    <!-- Invoice Document - Fixed for printing -->
     <div class="invoice-document">
-      <!-- Company Header -->
+      <!-- Header Section -->
       <div class="invoice-header">
-        <div class="company-info">
-          <img ngSrc="/assets/images/netcarat-logo.png" alt="NetCarat Logo" class="company-logo" height="428"
-               width="1868">
+        <div class="company-section">
+          <div class="company-name">NetCarat</div>
+          <div class="company-subtitle">Premium Jewelry & Timepieces</div>
           <div class="company-details">
-            <h1>NETCARAT</h1>
-            <p class="company-tagline">DIAMONDS & WATCHES</p>
-            <div class="company-contact">
-              <p>Premium Jewelry & Timepieces</p>
-              <p>Contact: info at netcarat.com | Phone: +1-555-123-4567</p>
-              <p>123 Diamond Street, Jewelry District, NY 10001</p>
-            </div>
+            <div>123 Diamond Street, Jewelry District, NY 10001</div>
+            <div>Phone: +1-555-123-4567 | Email: info@netcarat.com</div>
           </div>
         </div>
-        <div class="invoice-meta">
-          <h2>INVOICE</h2>
-          <div class="invoice-details">
-            <p><strong>Invoice Number:</strong> {{ invoiceData.invoiceNumber }}</p>
-            <p><strong>Date:</strong> {{ invoiceData.invoiceDate }}</p>
-            <p><strong>Due Date:</strong> {{ invoiceData.dueDate }}</p>
+
+        <div class="invoice-title-section">
+          <h1 class="invoice-title">INVOICE</h1>
+          <div class="invoice-meta">
+            <div class="meta-row">
+              <span class="meta-label">Invoice Number:</span>
+              <span class="meta-value">{{ invoiceData.invoiceNumber }}</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Date:</span>
+              <span class="meta-value">{{ invoiceData.invoiceDate }}</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Due Date:</span>
+              <span class="meta-value">{{ invoiceData.dueDate }}</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Bill To Section -->
       <div class="bill-to-section">
-        <div class="bill-to">
-          <h3>BILL TO:</h3>
-          <div class="client-details">
-            <p class="client-name">{{ invoiceData.client.name }}</p>
-            <p>{{ invoiceData.client.address }}</p>
-            <p *ngIf="invoiceData.client.email">{{ invoiceData.client.email }}</p>
-            <p *ngIf="invoiceData.client.phone">{{ invoiceData.client.phone }}</p>
+        <div class="section-title">BILL TO:</div>
+        <div class="bill-to-content">
+          <div class="client-name">{{ invoiceData.client.name }}</div>
+          <div class="client-info">{{ invoiceData.client.address }}</div>
+          <div class="client-info" *ngIf="invoiceData.client.email">
+            {{ invoiceData.client.email }}
+          </div>
+          <div class="client-info" *ngIf="invoiceData.client.phone">
+            {{ invoiceData.client.phone }}
           </div>
         </div>
       </div>
 
       <!-- Items Table -->
-      <div class="invoice-items">
+      <div class="items-section">
         <table class="items-table">
           <thead>
-            <tr>
-              <th>Item ID</th>
-              <th>Description</th>
-              <th>Payment Type</th>
-              <th class="amount-col">Amount</th>
-            </tr>
+          <tr class="table-header">
+            <th class="col-id">Item ID</th>
+            <th class="col-description">Description</th>
+            <th class="col-type">Payment Type</th>
+            <th class="col-amount">Amount</th>
+          </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of invoiceData.invoiceItems">
-              <td>{{ item.productId }}</td>
-              <td>{{ item.description || 'Product Item' }}</td>
-              <td>
-                <span class="payment-type" [class]="item.paymentType.toLowerCase()">
+          <tr *ngFor="let item of invoiceData.invoiceItems" class="table-row">
+            <td class="col-id">{{ item.productId }}</td>
+            <td class="col-description">{{ item.description || 'Product Item' }}</td>
+            <td class="col-type">
+                <span class="payment-badge" [class]="item.paymentType.toLowerCase()">
                   {{ item.paymentType }}
                 </span>
-              </td>
-              <td class="amount-col">{{ item.soldPrice | currency:'EUR':'symbol':'1.2-2' }}</td>
-            </tr>
+            </td>
+            <td class="col-amount">€{{ item.soldPrice.toFixed(2) }}</td>
+          </tr>
           </tbody>
         </table>
       </div>
 
       <!-- Totals Section -->
-      <div class="invoice-totals">
-        <div class="totals-table">
-          <div class="total-row">
-            <span>Subtotal:</span>
-            <span>{{ invoiceData.subtotal | currency:'EUR':'symbol':'1.2-2' }}</span>
+      <div class="totals-section">
+        <div class="totals-container">
+          <div class="total-row subtotal-row">
+            <span class="total-label">Subtotal:</span>
+            <span class="total-value">€{{ invoiceData.subtotal.toFixed(2) }}</span>
           </div>
-          <div class="total-row">
-            <span>Tax Rate: {{ invoiceData.taxRate }}%</span>
-            <span>{{ invoiceData.taxAmount | currency:'EUR':'symbol':'1.2-2' }}</span>
+          <div class="total-row tax-row">
+            <span class="total-label">Tax ({{ invoiceData.taxRate }}%):</span>
+            <span class="total-value">€{{ invoiceData.taxAmount.toFixed(2) }}</span>
           </div>
-          <div class="total-row final-total">
-            <span><strong>Total Amount:</strong></span>
-            <span><strong>{{ invoiceData.totalAmount | currency:'EUR':'symbol':'1.2-2' }}</strong></span>
+          <div class="total-row grand-total-row">
+            <span class="total-label">Total Amount:</span>
+            <span class="total-value">€{{ invoiceData.totalAmount.toFixed(2) }}</span>
           </div>
         </div>
       </div>
 
-      <!-- Footer -->
+      <!-- Footer Section -->
       <div class="invoice-footer">
-        <div class="payment-terms">
-          <h4>Payment Terms & Conditions:</h4>
-          <ul>
+        <div class="footer-left">
+          <div class="footer-title">Payment Terms & Conditions:</div>
+          <ul class="terms-list">
             <li>Payment is due within 30 days of invoice date</li>
             <li>Late payments may incur additional charges</li>
-            <li>All items sold are subject to our standard terms and conditions</li>
+            <li>All items sold are subject to our standard terms</li>
             <li>For inquiries, please contact us</li>
           </ul>
         </div>
-        <div class="thank-you">
-          <p><strong>Thank you for your business!</strong></p>
-          <p>We appreciate your trust in NetCarat for your luxury jewelry and timepiece needs.</p>
+        <div class="footer-right">
+          <div class="thank-you-text">Thank you for your business!</div>
+          <div class="appreciation-text">We appreciate your trust in NetCarat for your luxury jewelry and timepiece needs.</div>
         </div>
       </div>
     </div>

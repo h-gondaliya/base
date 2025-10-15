@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,8 +42,7 @@ export interface InvoiceDto {
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule,
-    NgOptimizedImage
+    MatProgressSpinnerModule
   ],
   templateUrl: './invoice.html',
   styleUrl: './invoice.scss'
@@ -62,13 +61,11 @@ export class Invoice implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Check authentication
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
 
-    // Get invoice number from route parameters
     this.invoiceNumber = this.route.snapshot.paramMap.get('invoiceNumber') || '';
 
     if (this.invoiceNumber) {
