@@ -13,4 +13,6 @@ public interface SoldProductsRepository extends JpaRepository<SoldProducts, Long
     List<SoldProducts> findSoldProductsByProductIdIn(Collection<Long> productIds);
 
     List<SoldProducts> findByPaymentType(PaymentType paymentType);
+    
+    List<SoldProducts> findByInvoiceId(Long invoiceId);
 }

@@ -1,6 +1,7 @@
 package com.netcarat.service;
 
 import com.netcarat.dto.CreateInvoiceRequestDto;
+import com.netcarat.dto.InvoiceListDto;
 import com.netcarat.modal.Invoice;
 import com.netcarat.modal.InvoiceType;
 import com.netcarat.modal.Client;
@@ -136,5 +137,32 @@ public class InvoiceService {
     private String generateInvoiceNumber(Long clientId) {
         // Simple invoice number generation - could be enhanced
         return "INV-" + clientId + "-" +System.currentTimeMillis();
+    }
+    
+    public List<InvoiceListDto> getAllInvoices() {
+        List<Invoice> invoices = invoiceRepository.findAllActiveInvoices();
+        return invoices.stream()
+                .map(this::convertToInvoiceListDto)
+                .collect(Collectors.toList());
+    }
+    
+    private InvoiceListDto convertToInvoiceListDto(Invoice invoice) {
+        List<SoldProducts> soldProducts = soldProductsRepository.findByInvoiceId(invoice.getId());
+        
+        Long totalItems = (long) soldProducts.size();
+        BigDecimal totalPrice = soldProducts.stream()
+                .map(SoldProducts::getSoldPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        
+        String clientName = invoice.getClient() != null ? invoice.getClient().getClientName() : null;
+        
+        return new InvoiceListDto(
+                invoice.getId(),
+                invoice.getInvoiceType(),
+                invoice.getInvoiceNumber(),
+                totalItems,
+                totalPrice,
+                clientName
+        );
     }
 }

@@ -1,6 +1,7 @@
 package com.netcarat.controller;
 
 import com.netcarat.dto.CreateInvoiceRequestDto;
+import com.netcarat.dto.InvoiceListDto;
 import com.netcarat.modal.Invoice;
 import com.netcarat.service.InvoiceService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/invoices")
@@ -35,6 +38,22 @@ public class InvoiceController {
             return ResponseEntity.status(HttpStatus.CREATED).body(invoice);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    @GetMapping("/list")
+    @Operation(summary = "Get all invoices", 
+               description = "Retrieves a list of all invoices with invoice type, invoice number, total items in sold_product table, total price, and client name")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved invoice list"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<InvoiceListDto>> getAllInvoices() {
+        try {
+            List<InvoiceListDto> invoices = invoiceService.getAllInvoices();
+            return ResponseEntity.ok(invoices);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
