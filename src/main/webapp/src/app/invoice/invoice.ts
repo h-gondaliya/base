@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -7,6 +7,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../auth.service';
 import {ApiService, InvoiceDto, InvoiceType} from '../services/api.service';
+
+@Pipe({
+  name: 'replaceLineBreaks',
+  standalone: true
+})
+export class ReplaceLineBreaksPipe implements PipeTransform {
+  transform(value: string): string {
+    if (!value) return value;
+    return value.replace(/\n/g, '<br>');
+  }
+}
 
 @Component({
   selector: 'app-invoice',
@@ -17,7 +28,8 @@ import {ApiService, InvoiceDto, InvoiceType} from '../services/api.service';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    ReplaceLineBreaksPipe
   ],
   templateUrl: './invoice.html',
   styleUrl: './invoice.scss'

@@ -45,7 +45,12 @@
         </div>
 
         <div class="invoice-title-section">
-          <h1 class="invoice-title">INVOICE</h1>
+          <h1 class="invoice-title">@if (invoiceData.invoiceType === InvoiceType.INVOICE) {
+            INVOICE
+          } @else {
+            CREDIT NOTE
+          } </h1>
+
           <div class="invoice-meta">
             <div class="meta-row">
               <span class="meta-label">Invoice Number:</span>
@@ -68,7 +73,7 @@
         <div class="section-title">BILL TO:</div>
         <div class="bill-to-content">
           <div class="client-name">{{ invoiceData.client.name }}</div>
-          <div class="client-info">{{ invoiceData.client.address }}</div>
+          <div class="client-info" [innerHTML]="invoiceData.client.address | replaceLineBreaks"></div>
           <div class="client-info" *ngIf="invoiceData.client.email">
             {{ invoiceData.client.email }}
           </div>
