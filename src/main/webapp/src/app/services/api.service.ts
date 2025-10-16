@@ -15,6 +15,32 @@ export interface AvailableProductCount {
   virtualStockCount: number;
 }
 
+export interface ClientDto {
+  name: string;
+  address: string;
+  email: string;
+  phone: string;
+}
+
+export interface InvoiceItemDto {
+  productId: number;
+  soldPrice: number;
+  paymentType: string;
+  description: string;
+}
+
+export interface InvoiceDto {
+  invoiceNumber: string;
+  invoiceDate: string;
+  dueDate: string;
+  client: ClientDto;
+  invoiceItems: InvoiceItemDto[];
+  subtotal: number;
+  taxRate: number;
+  taxAmount: number;
+  totalAmount: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,6 +64,16 @@ export class ApiService {
   getApprovalStatsByClient(): Observable<ClientApprovalStats[]> {
     const headers = this.getAuthHeaders();
     return this.http.get<ClientApprovalStats[]>(`${environment.apiUrl}/products/approval-stats-by-client`, { headers });
+  }
+
+  /**
+   * Get invoice details by invoice number
+   * @param invoiceNumber - The invoice number to retrieve details for
+   * @returns Observable<InvoiceDto> - The invoice details
+   */
+  getInvoiceDetails(invoiceNumber: string): Observable<InvoiceDto> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<InvoiceDto>(`${environment.apiUrl}/invoices/details/${invoiceNumber}`, { headers });
   }
 
   /**

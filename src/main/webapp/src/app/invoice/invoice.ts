@@ -5,34 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth.service';
-
-export interface ClientDto {
-  name: string;
-  address: string;
-  email: string;
-  phone: string;
-}
-
-export interface InvoiceItemDto {
-  productId: number;
-  soldPrice: number;
-  paymentType: string;
-  description: string;
-}
-
-export interface InvoiceDto {
-  invoiceNumber: string;
-  invoiceDate: string;
-  dueDate: string;
-  client: ClientDto;
-  invoiceItems: InvoiceItemDto[];
-  subtotal: number;
-  taxRate: number;
-  taxAmount: number;
-  totalAmount: number;
-}
+import { ApiService, InvoiceDto } from '../services/api.service';
 
 @Component({
   selector: 'app-invoice',
@@ -57,7 +31,7 @@ export class Invoice implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient,
+    private apiService: ApiService,
     private authService: AuthService
   ) {}
 
@@ -80,13 +54,7 @@ export class Invoice implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
-    this.http.get<InvoiceDto>(`/api/invoices/details/${this.invoiceNumber}`, { headers })
+    this.apiService.getInvoiceDetails(this.invoiceNumber)
       .subscribe({
         next: (invoice) => {
           this.invoiceData = invoice;
