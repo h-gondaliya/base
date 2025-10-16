@@ -125,17 +125,21 @@
       <!-- Footer Section -->
       <div class="invoice-footer">
         <div class="footer-left">
-          <div class="footer-title">Payment Terms & Conditions:</div>
+          <div class="footer-title">Terms & Conditions:</div>
           <ul class="terms-list">
-            <li>Payment is due within 30 days of invoice date</li>
-            <li>Late payments may incur additional charges</li>
-            <li>All items sold are subject to our standard terms</li>
-            <li>For inquiries, please contact us</li>
+            @if (invoiceData.invoiceType === InvoiceType.INVOICE) {
+              <li>Payment is due within 30 days of invoice date</li>
+            } @else {
+              <li>Items are provided on an approval basis.</li>
+              <li>Items remain the property of Netcarat until sold or returned.</li>
+            }
           </ul>
         </div>
         <div class="footer-right">
-          <div class="thank-you-text">Thank you for your business!</div>
-          <div class="appreciation-text">We appreciate your trust in NetCarat for your luxury jewelry and timepiece needs.</div>
+          <div class="thank-you-text">Account Detail</div>
+          <div class="appreciation-text">Julee Gondaliya</div>
+          <div class="appreciation-text">IBAN: DE51 7005 3070 0032 7365 22</div>
+          <div class="appreciation-text">BIC: BYLADEM1FFB</div>
         </div>
       </div>
     </div>

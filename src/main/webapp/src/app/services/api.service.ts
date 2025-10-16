@@ -28,10 +28,15 @@ export interface InvoiceItemDto {
   paymentType: string;
   description: string;
 }
+export enum  InvoiceType {
+  INVOICE = 'INVOICE',
+  APPROVAL = 'APPROVAL'
+}
 
 export interface InvoiceDto {
   invoiceNumber: string;
   invoiceDate: string;
+  invoiceType: string;
   dueDate: string;
   client: ClientDto;
   invoiceItems: InvoiceItemDto[];

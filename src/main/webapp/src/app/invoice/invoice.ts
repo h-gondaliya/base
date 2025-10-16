@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../auth.service';
-import { ApiService, InvoiceDto } from '../services/api.service';
+import {ApiService, InvoiceDto, InvoiceType} from '../services/api.service';
 
 @Component({
   selector: 'app-invoice',
@@ -75,4 +75,6 @@ export class Invoice implements OnInit {
   printInvoice() {
     window.print();
   }
+
+  protected readonly InvoiceType = InvoiceType;
 }

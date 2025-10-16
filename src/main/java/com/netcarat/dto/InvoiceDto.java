@@ -1,6 +1,7 @@
 package com.netcarat.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.netcarat.modal.InvoiceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class InvoiceDto {
     private String invoiceNumber;
+    private InvoiceType invoiceType;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate invoiceDate;
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -30,9 +32,10 @@ public class InvoiceDto {
     /**
      * Constructor that calculates totals automatically
      */
-    public InvoiceDto(String invoiceNumber, LocalDate invoiceDate, LocalDate dueDate, 
+    public InvoiceDto(String invoiceNumber, InvoiceType invoiceType, LocalDate invoiceDate, LocalDate dueDate, 
                       ClientDto client, List<InvoiceItemDto> invoiceItems, BigDecimal taxRate) {
         this.invoiceNumber = invoiceNumber;
+        this.invoiceType = invoiceType;
         this.invoiceDate = invoiceDate;
         this.dueDate = dueDate;
         this.client = client;

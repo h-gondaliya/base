@@ -213,6 +213,7 @@ public class InvoiceService {
         // Create and return InvoiceDto
         return new InvoiceDto(
                 invoice.getInvoiceNumber(),
+                invoice.getInvoiceType(),
                 invoice.getInvoiceDate(),
                 invoice.getDueDate(),
                 clientDto,
